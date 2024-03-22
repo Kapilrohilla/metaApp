@@ -1,22 +1,8 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-  useContext,
-} from 'react';
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useRef, useState, useEffect, useMemo, useCallback, useContext} from 'react';
+import {StatusBar, StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {useIsFocused} from '@react-navigation/native';
 import {useNavigation, DrawerActions} from '@react-navigation/native';
@@ -28,7 +14,7 @@ import {AuthContext} from '../Navigation/AuthProvider';
 import {Actionsheet, useDisclose, Box} from 'native-base';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Menu, Divider} from 'react-native-paper';
-import {io} from 'socket.io-client';
+// import {io} from 'socket.io-client';
 import store from '../../ReduxToolkit/store';
 import {useSelector} from 'react-redux';
 // import {BASEURL} from '@env';
@@ -122,9 +108,7 @@ const Trades = () => {
   useEffect(socketEffectFunction, [isFocused]);
 
   const MemoizedItem = React.memo(({item}) => {
-    const symbolSpecificSocketData = socketData.filter(
-      data => data.symbol.split('.')[0] === item?.symbol,
-    );
+    const symbolSpecificSocketData = socketData.filter(data => data.symbol.split('.')[0] === item?.symbol);
     const symbol = item?.symbol;
     let digit = useMemo(() => getDigit(symbol), []);
     const ask = Number(symbolSpecificSocketData[0]?.ask).toFixed(digit);
@@ -178,10 +162,7 @@ const Trades = () => {
                     <Text
                       style={{
                         color:
-                          item?.type === 1 ||
-                          item?.type === 2 ||
-                          item?.type === 4 ||
-                          item?.type === 6
+                          item?.type === 1 || item?.type === 2 || item?.type === 4 || item?.type === 6
                             ? '#48FF00'
                             : '#C10101CF',
 
@@ -219,8 +200,7 @@ const Trades = () => {
                       alignSelf: 'center',
                     }}>
                     {/* 1.1023 → 1.0748 */}
-                    {price} →{' '}
-                    {Number(symbolSpecificSocketData[0]?.ask).toFixed(digit)}
+                    {price} → {Number(symbolSpecificSocketData[0]?.ask).toFixed(digit)}
                   </Text>
                 </View>
                 <Text
@@ -380,10 +360,7 @@ const Trades = () => {
                     <Text
                       style={{
                         color:
-                          item?.type === 1 ||
-                          item?.type === 2 ||
-                          item?.type === 4 ||
-                          item?.type === 6
+                          item?.type === 1 || item?.type === 2 || item?.type === 4 || item?.type === 6
                             ? '#48FF00'
                             : '#C10101CF',
 
@@ -420,8 +397,7 @@ const Trades = () => {
                       alignSelf: 'center',
                     }}>
                     {/* 1.1023 → 1.0748 */}
-                    {Number(item.price).toFixed(digit)} →{' '}
-                    {Number(symbolSpecificSocketData[0]?.ask).toFixed(digit)}
+                    {Number(item.price).toFixed(digit)} → {Number(symbolSpecificSocketData[0]?.ask).toFixed(digit)}
                   </Text>
                 </View>
                 <Text
@@ -473,9 +449,7 @@ const Trades = () => {
       const firstTime = first.symbol;
       const secondTime = second.symbol;
 
-      return toggleSymbol
-        ? firstTime.localeCompare(secondTime)
-        : secondTime.localeCompare(firstTime);
+      return toggleSymbol ? firstTime.localeCompare(secondTime) : secondTime.localeCompare(firstTime);
     });
     setToggleSymbol(!toggleSymbol);
     setData(sorted);
@@ -735,9 +709,7 @@ const Trades = () => {
         <FlatList
           data={data}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({item, index}) => (
-            <MemoizedItem item={item} index={index} />
-          )}
+          renderItem={({item, index}) => <MemoizedItem item={item} index={index} />}
         />
       ) : (
         <Text>Failed to fetch data</Text>
@@ -775,8 +747,7 @@ const Trades = () => {
                       marginLeft: scale(5),
                       textAlignVertical: 'bottom',
                     }}>
-                    {selectData?.type === '1' ? 'Buy' : 'Sell'}{' '}
-                    {selectData?.volume}
+                    {selectData?.type === '1' ? 'Buy' : 'Sell'} {selectData?.volume}
                   </Text>
                 </View>
                 <Text
@@ -907,8 +878,8 @@ const Trades = () => {
                   textAlign: 'center',
                 }}>
                 #{selectData?.ticket}
-                {selectData?.type === '1' ? 'Buy' : 'Sell'} {selectData?.volume}{' '}
-                {selectData?.symbol} {selectData?.price}
+                {selectData?.type === '1' ? 'Buy' : 'Sell'} {selectData?.volume} {selectData?.symbol}{' '}
+                {selectData?.price}
               </Text>
             </View>
           </Box>

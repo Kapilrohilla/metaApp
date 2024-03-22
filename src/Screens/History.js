@@ -24,26 +24,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import {populatePositionHistory} from '../../ReduxToolkit/slices/historyPositionSlice';
 import {changeType} from '../../ReduxToolkit/slices/HistoryTypeSlice';
 import {HistoryContext} from '../Navigation/HistoryProvider';
+import {populateOrderHistory} from '../../ReduxToolkit/slices/historyOrderSlice';
+import {populateDealHistory} from '../../ReduxToolkit/slices/historyDealSlice';
+// import HistoryDealSlice from '../../ReduxToolkit/slices/historyDealSlice';
 
 // const HistoryContext = createContext();
 
 const History = () => {
   const BASEURL = useSelector(state => state.baseUrl);
-  // const navigation = useNavigation();
-  // const [selectedTab, setSelect] = useState(1);
-  // const [visible, setVisible] = useState(false);
-  // const [dollor, setDollor] = useState(false);
   const [calendar, setCalendar] = useState(false);
   const [modalDate, setModalDate] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  // const [symbolSort, setSymbolSort] = useState(false);
-  // const [ticketSort, setTicketSort] = useState(false);
-  // const [typeSort, setTypeSort] = useState(false);
-  // const [volumeSort, setvolumeSort] = useState(false);
-  // const [openTimeSort, setopenTimeSort] = useState(false);
-  // const [closeTimeSort, setcloseTimeSort] = useState(false);
-  // const [profitSort, setprofitSort] = useState(false);
   const [filteredData, setFiltereData] = useState(null);
   const [loading, setLoading] = useState(false);
   const {Token} = useContext(AuthContext);
@@ -52,16 +44,13 @@ const History = () => {
   const userCreatedDate = store.getState().user?.createdAt;
   const dispatch = useDispatch();
   const selectedTab = useSelector(state => state.historyType);
-  // Alert.alert(selectedTab + '');
   const formattedUserCreatedDate =
     userCreatedDate?.split('T')[0] + '   ' + userCreatedDate?.split('T')[1]?.split('.')[0];
-  // const [positionData, setPositionData] = useState([]);
-  const [orderData, setOrderData] = useState([]);
-  const [dealData, setDealData] = useState([]);
-  // const [positionData, setPositionData] = useState(useSelector(state => state?.historyPosition));
-  const {positionData} = useContext(HistoryContext);
+  // const [dealData, setDealData] = useState([]);
+  const {positionData, orderData, dealData} = useContext(HistoryContext);
+  // const positionData = useSelector(state => state?.historyPosition);
   // sorting start
-
+  // console.log(positionData, ', position data');
   // const handleCloseTimeSort = () => {
   //   const sortedData = positionData.sort((a, b) => {
   //     const time1 = new Date(a?.updatedAt).getTime();
@@ -75,13 +64,14 @@ const History = () => {
   // };
   // const handleProfitSort = () => {};
   // // sorting end
-
+  /*
   const today = useMemo(() => moment().format('l'), []);
   const lastweek = useMemo(() => moment().subtract(7, 'days').format('l'), []);
   const lastMonth = useMemo(() => moment().subtract(1, 'month').calendar(), []);
   const last3Month = useMemo(() => moment().subtract(3, 'month').calendar(), []);
-
+*/
   // time based filters top
+  /*
   const todayFilter = () => {
     let filteredArray = [];
     for (let i = 0; i < positionData.length; i++) {
@@ -101,7 +91,8 @@ const History = () => {
     console.log(filteredArray);
     setFiltereData(filteredArray);
   };
-
+  */
+  /*
   const lastWeekFilter = useCallback(() => {
     let filterArray = [];
     const reFormattedLastWeek = lastweek.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
@@ -119,8 +110,8 @@ const History = () => {
     setCalendar(false);
     setFiltereData(filterArray);
   }, [positionData]);
-
-  const lastMonthFilter = useCallback(() => {
+*/
+  /* const lastMonthFilter = useCallback(() => {
     let filter = [];
     const reFormattedLastMonth = lastMonth.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
     for (let i = 0; i < positionData.length; i++) {
@@ -131,7 +122,8 @@ const History = () => {
     setCalendar(false);
     setFiltereData(filter);
   }, []);
-
+*/
+  /*
   const last3MonthFilter = useCallback(() => {
     let filter = [];
     const reFormattedLast3Month = last3Month.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2');
@@ -143,6 +135,7 @@ const History = () => {
     setCalendar(false);
     setFiltereData(filter);
   }, []);
+  */
   const customDateFilter = useCallback(() => {
     console.log(startDate);
     const initialDate = new Date(startDate).getTime();
@@ -166,7 +159,7 @@ const History = () => {
     commission = 0;
   if (selectedTab === 1 || selectedTab == 3) {
     {
-      for (let i = 0; i < positionData.length; i++) {
+      for (let i = 0; i < positionData?.length; i++) {
         // console.log(Number(positionData[i]?.profit));
         profit += Number(positionData[i]?.profit);
         swap = Number(positionData[i]?.swap);
@@ -182,8 +175,8 @@ const History = () => {
     canceled = 0,
     total = 0;
   if (selectedTab === 2) {
-    total = positionData.length;
-    for (let i = 0; i < positionData.length; i++) {
+    total = positionData?.length;
+    for (let i = 0; i < positionData?.length; i++) {
       if (!positionData[i]?.status) {
         canceled++;
       }
@@ -228,7 +221,8 @@ const History = () => {
           },
         })
         .then(response => {
-          setOrderData(response.data);
+          // setOrderData(response.data);
+          dispatch(populateOrderHistory(response?.data));
           // console.log(response.data);
           // setLoading(false);
         });
@@ -249,7 +243,8 @@ const History = () => {
           },
         })
         .then(response => {
-          setDealData(response.data);
+          // setDealData(response.data);
+          dispatch(populateDealHistory(response.data));
           // setLoading(false);
         });
     } catch (error) {

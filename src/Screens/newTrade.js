@@ -600,7 +600,7 @@ export default function NewTrade() {
               fetchUserDetails();
             }}
           />
-          <Menu
+          {/* <Menu
             visible={openFilterModal}
             onDismiss={onDismiss}
             anchor={
@@ -623,7 +623,7 @@ export default function NewTrade() {
             <Menu.Item onPress={() => {}} title="Symbol" />
             <Divider />
             <Menu.Item onPress={() => {}} title="Profit" />
-          </Menu>
+          </Menu> */}
           <AntDesign
             name="addfile"
             color={'#fff'}

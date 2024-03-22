@@ -8,13 +8,13 @@ const HistoryDealSlice = createSlice({
       // console.log('position updated');
       return action.payload;
     },
-    symbolSort: function (state, action) {
+    symbolDealSort: function (state, action) {
       // console.log('soritng started');
       const sortedState = state.sort((a, b) => {
         const symbol1 = a?.symbol;
         const symbol2 = b?.symbol;
         // console.log(symbol1, symbol2);
-        return symbolSort ? symbol1.localeCompare(symbol2) : symbol2.localeCompare(symbol1);
+        return symbol1.localeCompare(symbol2);
       });
       // console.log(sortedState);
       // sortedState.map(s => {
@@ -83,6 +83,7 @@ const HistoryDealSlice = createSlice({
       return sortedData;
     },
     // time based sorting
+    /*
     timeBasedSort: function (state, action) {
       const today = moment().format('l');
       const lastweek = moment().subtract(7, 'days').format('l');
@@ -116,13 +117,13 @@ const HistoryDealSlice = createSlice({
           'Invalid type';
           return state;
       }
-    },
+    },*/
   },
 });
 
 export const {
   populateDealHistory,
-  symbolSort,
+  symbolDealSort,
   ticketDealSort,
   typeDealSort,
   volumeDealSort,

@@ -10,13 +10,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
@@ -26,22 +20,12 @@ import {Divider} from 'native-base';
 import {Menu} from 'react-native-paper';
 import axios from 'react-native-axios';
 import {AuthContext} from '../Navigation/AuthProvider';
-import {io} from 'socket.io-client';
+// import {io} from 'socket.io-client';
 import WebView from 'react-native-webview';
 import {useSelector} from 'react-redux';
 // import {BASEURL} from '@env';
 
-const symbolMenuItems = [
-  'XAUUSD',
-  'EURUSD',
-  'GBPUSD',
-  'USDCHF',
-  'USDJPY',
-  'USDCNH',
-  'USDRUB',
-  'AUDUSD',
-  'NZDUSD',
-];
+const symbolMenuItems = ['XAUUSD', 'EURUSD', 'GBPUSD', 'USDCHF', 'USDJPY', 'USDCNH', 'USDRUB', 'AUDUSD', 'NZDUSD'];
 const expirationItemsList = [
   {label: 'GTC', value: '1'},
   {label: 'Today', value: '2'},
@@ -53,9 +37,7 @@ export default function OrderCreate({route}) {
   const BASEURL = useSelector(state => state.baseUrl);
   const key = route?.params?.key;
   const symbolFromNavigation = route?.params?.symbol;
-  const initialOrderSymbol = symbolFromNavigation
-    ? symbolFromNavigation
-    : symbolMenuItems[0];
+  const initialOrderSymbol = symbolFromNavigation ? symbolFromNavigation : symbolMenuItems[0];
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
@@ -164,9 +146,7 @@ export default function OrderCreate({route}) {
     setQuantity(Number(quantity) + Number(changeAmount));
   }
   let firstClick = 0;
-  const charturl = `${BASEURL}/new-chart/?symbol=${
-    symbolFromNavigation ? symbolFromNavigation : 'XAUUSD'
-  }&time=${1}`;
+  const charturl = `${BASEURL}/new-chart/?symbol=${symbolFromNavigation ? symbolFromNavigation : 'XAUUSD'}&time=${1}`;
 
   console.log(expirationTypeName);
   return (
@@ -281,17 +261,13 @@ export default function OrderCreate({route}) {
                 <View style={styles.containerText}>
                   <Text style={styles.baseText}>
                     {bidAsk?.bid.toString().split('.')[0]}.
-                    <Text style={{fontSize: scale(25)}}>
-                      {Number(bidAsk?.bid?.toString()?.split('.')[1])}
-                    </Text>
+                    <Text style={{fontSize: scale(25)}}>{Number(bidAsk?.bid?.toString()?.split('.')[1])}</Text>
                   </Text>
                 </View>
                 <View style={styles.containerText}>
                   <Text style={styles.baseText}>
                     {bidAsk?.ask.toString().split('.')[0]}.
-                    <Text style={{fontSize: scale(25)}}>
-                      {Number(bidAsk?.ask?.toString()?.split('.')[1])}
-                    </Text>
+                    <Text style={{fontSize: scale(25)}}>{Number(bidAsk?.ask?.toString()?.split('.')[1])}</Text>
                   </Text>
                 </View>
               </View>
@@ -408,9 +384,7 @@ export default function OrderCreate({route}) {
                 setOpen={setOpenExpiration}
                 style={[styles.dropdown]}
                 setValue={setExpiration}
-                placeholder={
-                  expiration === null ? 'Expiration' : expirationTypeName
-                }
+                placeholder={expiration === null ? 'Expiration' : expirationTypeName}
                 textStyle={{
                   color: '#ffffff',
                 }}
@@ -437,9 +411,7 @@ export default function OrderCreate({route}) {
           <>
             {Number(orderType) !== 1 ? (
               <>
-                <TouchableOpacity
-                  onPress={() => placeNewOrder()}
-                  style={styles.buttonBottom1}>
+                <TouchableOpacity onPress={() => placeNewOrder()} style={styles.buttonBottom1}>
                   <Text style={styles.buy}>Place</Text>
                 </TouchableOpacity>
               </>
@@ -450,22 +422,12 @@ export default function OrderCreate({route}) {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}>
-                <TouchableOpacity
-                  onPress={() => placeNewOrder('Sell')}
-                  style={styles.buttonBottom}>
+                <TouchableOpacity onPress={() => placeNewOrder('Sell')} style={styles.buttonBottom}>
                   <Text style={styles.sell}>SELL</Text>
                 </TouchableOpacity>
-                <Divider
-                  bg="#FFFFFFA1"
-                  thickness="1"
-                  my="1"
-                  h={scale(20)}
-                  orientation="vertical"
-                />
+                <Divider bg="#FFFFFFA1" thickness="1" my="1" h={scale(20)} orientation="vertical" />
 
-                <TouchableOpacity
-                  onPress={() => placeNewOrder('Buy')}
-                  style={styles.buttonBottom}>
+                <TouchableOpacity onPress={() => placeNewOrder('Buy')} style={styles.buttonBottom}>
                   <Text style={styles.buy}>BUY</Text>
                 </TouchableOpacity>
               </View>

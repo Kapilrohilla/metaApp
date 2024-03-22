@@ -5,6 +5,7 @@ import BaseUrlSlice from './slices/baseUrl';
 import HistoryPositionSlice from './slices/historyPositionSlice';
 import HistoryOrderSlice from './slices/historyOrderSlice';
 import HistoryTypeSlice from './slices/HistoryTypeSlice';
+import HistoryDealSlice from './slices/historyDealSlice';
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     baseUrl: BaseUrlSlice.reducer,
     historyPosition: HistoryPositionSlice.reducer,
     historyOrder: HistoryOrderSlice.reducer,
+    histroyDeal: HistoryDealSlice.reducer,
     historyType: HistoryTypeSlice.reducer,
   },
 });

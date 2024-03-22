@@ -16,7 +16,7 @@ const HistoryPositionSlice = createSlice({
         const symbol1 = a?.symbol;
         const symbol2 = b?.symbol;
         // console.log(symbol1, symbol2);
-        return symbolSort ? symbol1.localeCompare(symbol2) : symbol2.localeCompare(symbol1);
+        return symbol1.localeCompare(symbol2);
       });
       // console.log(sortedState);
       // sortedState.map(s => {
@@ -85,40 +85,41 @@ const HistoryPositionSlice = createSlice({
       return sortedData;
     },
     // time based sorting
-    // timeBasedSort: function (state, action) {
-    //   const today = moment().format('l');
-    //   const lastweek = moment().subtract(7, 'days').format('l');
-    //   const lastMonth = moment().subtract(1, 'month').calendar();
-    //   const last3Month = moment().subtract(3, 'month').calendar();
+    /*
+    timeBasedSort: function (state, action) {
+      const today = moment().format('l');
+      const lastweek = moment().subtract(7, 'days').format('l');
+      const lastMonth = moment().subtract(1, 'month').calendar();
+      const last3Month = moment().subtract(3, 'month').calendar();
 
-    //   switch (action.type) {
-    //     case 'today':
-    //       let filteredArray = [];
-    //       for (let i = 0; i < state.length; i++) {
-    //         if (
-    //           new Date(state[i]?.createdAt).toDateString() ===
-    //           new Date(today.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2')).toDateString()
-    //         ) {
-    //           // console.log('found');
-    //           filteredArray.push(positionData[i]);
-    //         } else {
-    //           console.log('not found');
-    //           console.log(new Date(positionData[i].createdAt).toDateString());
-    //           console.log(new Date(today).toDateString());
-    //         }
-    //       }
-    //       break;
-    //     case 'lastweek':
-    //       break;
-    //     case 'last3month':
-    //       break;
-    //     case 'customPeriod':
-    //       break;
-    //     default:
-    //       'Invalid type';
-    //       return state;
-    //   }
-    // },
+      switch (action.type) {
+        case 'today':
+          let filteredArray = [];
+          for (let i = 0; i < state.length; i++) {
+            if (
+              new Date(state[i]?.createdAt).toDateString() ===
+              new Date(today.replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$3-$1-$2')).toDateString()
+            ) {
+              // console.log('found');
+              filteredArray.push(positionData[i]);
+            } else {
+              console.log('not found');
+              console.log(new Date(positionData[i].createdAt).toDateString());
+              console.log(new Date(today).toDateString());
+            }
+          }
+          break;
+        case 'lastweek':
+          break;
+        case 'last3month':
+          break;
+        case 'customPeriod':
+          break;
+        default:
+          'Invalid type';
+          return state;
+      }
+    },*/
   },
 });
 

@@ -70,8 +70,8 @@ const HistoryCard = ({type, data}) => {
   const status = data?.status ? 'Filled' : 'Cancelled';
   const entry = data?.entry ? 'in' : 'out';
   const order = data?.order;
+  // console.log(data);
   const dealTime = data?.entry ? formatDate(data?.createdAt) : formatDate(data?.updatedAt);
-
   return (
     <TouchableOpacity onPress={() => setOpened(!opened)}>
       <View

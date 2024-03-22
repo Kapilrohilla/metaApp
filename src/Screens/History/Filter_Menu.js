@@ -13,12 +13,28 @@ import {
   typePositionSort,
   volumePositionSort,
 } from '../../../ReduxToolkit/slices/historyPositionSlice';
+import {
+  closeTimeOrderSort,
+  openTimeOrderSort,
+  profitOrderSort,
+  symbolOrderSort,
+  typeOrderSort,
+  volumeOrderSort,
+} from '../../../ReduxToolkit/slices/historyOrderSlice';
+import {
+  closeTimeDealSort,
+  openTimeDealSort,
+  profitDealSort,
+  symbolDealSort,
+  typeDealSort,
+  volumeDealSort,
+} from '../../../ReduxToolkit/slices/historyDealSlice';
 
 export default function Filter_Menu() {
   const [isFilterVisible, setIsFilterVisible] = useState(false);
   const dispatch = useDispatch();
-  const historyState = useSelector(state => state.history);
-  console.log(historyState);
+  const historyType = useSelector(state => state.historyType);
+  console.log(historyType);
   return (
     <Menu
       visible={isFilterVisible}
@@ -41,7 +57,13 @@ export default function Filter_Menu() {
       }>
       <Menu.Item
         onPress={() => {
-          dispatch(symbolSort());
+          if (historyType === 1) {
+            dispatch(symbolSort());
+          } else if (historyType === 2) {
+            dispatch(symbolOrderSort());
+          } else if (historyType === 3) {
+            dispatch(symbolDealSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Symbol"
@@ -49,7 +71,13 @@ export default function Filter_Menu() {
       <Divider />
       <Menu.Item
         onPress={() => {
-          dispatch(ticketPositionSort());
+          if (historyType === 1) {
+            dispatch(ticketPositionSort());
+          } else if (historyType === 2) {
+            dispatch(ticketPositionSort());
+          } else if (historyType === 3) {
+            dispatch(ticketPositionSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Ticket"
@@ -57,7 +85,13 @@ export default function Filter_Menu() {
       <Divider />
       <Menu.Item
         onPress={() => {
-          dispatch(typePositionSort());
+          if (historyType === 1) {
+            dispatch(typePositionSort());
+          } else if (historyType === 2) {
+            dispatch(typeOrderSort());
+          } else if (historyType === 3) {
+            dispatch(typeDealSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Type"
@@ -65,7 +99,13 @@ export default function Filter_Menu() {
       <Divider />
       <Menu.Item
         onPress={() => {
-          dispatch(volumePositionSort());
+          if (historyType === 1) {
+            dispatch(volumePositionSort());
+          } else if (historyType === 2) {
+            dispatch(volumeOrderSort());
+          } else if (historyType === 3) {
+            dispatch(volumeDealSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Volume"
@@ -73,7 +113,13 @@ export default function Filter_Menu() {
       <Divider />
       <Menu.Item
         onPress={() => {
-          dispatch(openTimePositionSort());
+          if (historyType === 1) {
+            dispatch(openTimePositionSort());
+          } else if (historyType === 2) {
+            dispatch(openTimeOrderSort());
+          } else if (historyType === 3) {
+            dispatch(openTimeDealSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Open time"
@@ -81,7 +127,13 @@ export default function Filter_Menu() {
       <Divider />
       <Menu.Item
         onPress={() => {
-          dispatch(closeTimePositionSort());
+          if (historyType === 1) {
+            dispatch(closeTimePositionSort());
+          } else if (historyType === 2) {
+            dispatch(closeTimeOrderSort());
+          } else if (historyType === 3) {
+            dispatch(closeTimeDealSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Close Time"
@@ -89,7 +141,13 @@ export default function Filter_Menu() {
       <Divider />
       <Menu.Item
         onPress={() => {
-          dispatch(profitPositionSort());
+          if (historyType === 1) {
+            dispatch(profitPositionSort());
+          } else if (historyType === 2) {
+            dispatch(profitOrderSort());
+          } else if (historyType === 3) {
+            dispatch(profitDealSort());
+          }
           setIsFilterVisible(false);
         }}
         title="Profit"
