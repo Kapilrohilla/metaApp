@@ -28,7 +28,8 @@ import {useSelector} from 'react-redux';
 // import {BASEURL} from '@env';
 
 const Secondlogin = () => {
-  const BASEURL = useSelector(state => state.baseUrl);
+  // const BASEURL = useSelector(state => state?.baseUrl);
+  const BASEURL = 'http://35.154.68.218:8080';
   const {SignIn, Signup} = useContext(AuthContext);
   const navigation = useNavigation();
   const [locality, setLocality] = useState('');
@@ -37,13 +38,11 @@ const Secondlogin = () => {
   const {setToken, Token} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   return (
-    <SafeAreaView
-      style={{flex: 1, paddingHorizontal: 15, backgroundColor: '#1a1a1a'}}>
+    <SafeAreaView style={{flex: 1, paddingHorizontal: 15, backgroundColor: '#1a1a1a'}}>
       <TouchableOpacity
         style={{position: 'absolute', top: 15, left: 15, zIndex: 1000}}
         onPress={() => navigation.goBack()}></TouchableOpacity>
-      <View
-        style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
         <Text
           style={{
             fontSize: moderateScale(16),
@@ -137,7 +136,6 @@ const Secondlogin = () => {
                   }
                 })
                 .catch(error => {
-                  // Handle error
                   console.log('Error occurred: ');
                   console.log(error);
                 });
@@ -165,7 +163,8 @@ const Secondlogin = () => {
               redirect: 'follow',
             };
             setLoading(true);
-            fetch(`${BASEURL}/signup`, requestOptions)
+            const apiUrl = `${BASEURL}/signup`;
+            fetch(apiUrl, requestOptions)
               .then(r => r.json())
               .then(result => {
                 const snackbarOptions = {
@@ -175,7 +174,6 @@ const Secondlogin = () => {
                 };
                 setLoading(false);
                 setIsSignupModalVisible(result?.user);
-                console.log(result);
                 AsyncStorage.setItem('userToken', result?.token).then(r => {
                   setToken(result?.token);
                   console.warn(result?.token);
@@ -215,8 +213,62 @@ const Secondlogin = () => {
               })
               .catch(err => {
                 setLoading(false);
+                console.log('error');
                 console.log(err);
               });
+            // .then(result => {
+            //   console.log(result);
+            //   // /*
+            //   const snackbarOptions = {
+            //     textColor: 'green',
+            //     numberOfLines: 1,
+            //     backgroundColor: '#fff',
+            //   };
+            //   setLoading(false);
+            //   setIsSignupModalVisible(result?.user);
+            //   // console.log(result);
+            //   AsyncStorage.setItem('userToken', result?.token).then(r => {
+            //     setToken(result?.token);
+            //     console.warn(result?.token);
+            //     Snackbar.show({
+            //       text: `${result?.message}`,
+            //       ...snackbarOptions,
+            //     });
+            //   });
+            //   AsyncStorage.setItem(
+            //     'user1',
+            //     JSON.stringify({
+            //       userId: result?.user?.userId,
+            //       password: result?.user?.password,
+            //     }),
+            //   )
+            //     .then(r => {
+            //       console.log('user1: saved');
+            //     })
+            //     .catch(err => {
+            //       console.log('user1: failed saving');
+            //       console.log(err?.message());
+            //     });
+            //   AsyncStorage.setItem(
+            //     'loggedIn',
+            //     JSON.stringify({
+            //       userId: result?.user?.userId,
+            //       password: result?.user?.password,
+            //     }),
+            //   )
+            //     .then(r => {
+            //       console.log('loggedIn: saved');
+            //     })
+            //     .catch(err => {
+            //       console.log('LoggedIn: failed saving');
+            //       console.log(err?.message());
+            //     });
+            //   // */
+            // })
+            // .catch(err => {
+            //   setLoading(false);
+            //   console.log(err);
+            // });
           }}
           style={styles.button}>
           {loading ? (
@@ -253,14 +305,11 @@ const SignupModal = ({visible, hideDialog, navigation}) => {
   return (
     <Portal>
       <Dialog visible={visible} onDismiss={hideDialog}>
-        <Dialog.Title style={{marginBottom: 20, fontSize: 20}}>
-          Demo account credentials.
-        </Dialog.Title>
+        <Dialog.Title style={{marginBottom: 20, fontSize: 20}}>Demo account credentials.</Dialog.Title>
         <Dialog.Content>
           {/* <Text variant="bodyMedium">This is simple dialog</Text> */}
           <View style={{gap: 20}}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text>Username:</Text>
               <Text
                 onPress={() => {
@@ -270,8 +319,7 @@ const SignupModal = ({visible, hideDialog, navigation}) => {
                 {userId}
               </Text>
             </View>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text>Password:</Text>
               <Text
                 onPress={() => {
@@ -281,8 +329,7 @@ const SignupModal = ({visible, hideDialog, navigation}) => {
                 {password}
               </Text>
             </View>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text>Investor password:</Text>
               <Text
                 onPress={() => {
@@ -293,8 +340,7 @@ const SignupModal = ({visible, hideDialog, navigation}) => {
                 {investorPassword}
               </Text>
             </View>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text>Balance:</Text>
               <Text>{balance}</Text>
             </View>
@@ -342,7 +388,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AvenirHeavy',
   },
   button: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#333',
     elevation: 5,
     borderRadius: moderateScale(30),
     alignItems: 'center',

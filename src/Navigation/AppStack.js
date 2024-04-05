@@ -12,7 +12,6 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MainQuots from '../Screens/MainQuots';
 import IonicIcons from 'react-native-vector-icons/Ionicons';
 import Charts from '../Screens/Charts';
-// import Trades from '../Screens/Trades';
 const Trades = lazy(() => import('../Screens/Trades'));
 import History from '../Screens/History';
 import Message from '../Screens/Message';

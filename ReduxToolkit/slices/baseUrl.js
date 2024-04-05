@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const BaseUrlSlice = createSlice({
-  initialState: 'http://3.111.211.154:8080',
+  initialState: 'http://35.154.68.218:8080',
   name: 'baseUrl',
   reducers: {
     updateBaseUrl: function (state, action) {

@@ -21,7 +21,6 @@ import {populateWatchlist} from '../../ReduxToolkit/slices/watchlistslice';
 const MainQuots = () => {
   const {Token} = useContext(AuthContext);
   const BASEURL = useSelector(state => state.baseUrl);
-
   const [messages, setMessages] = useState([]);
   const [isFocusHeight, setIsFocusHeight] = useState(false);
   const [heightvalue, setHeightValue] = useState('');
