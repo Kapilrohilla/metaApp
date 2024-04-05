@@ -130,6 +130,7 @@ export default function NewTrade() {
       <script>
         const nativeData = JSON.parse(window.ReactNativeWebView.injectedObjectJson());
         const balance = nativeData?.userData?.balance;
+        const userId = nativeData?.userData?._id;
         const equity = document.getElementById("equityValue");
         equity.innerHTML = (balance).toFixed(2);
         const positionsContainer = document.getElementById("positionsContainer");
@@ -185,6 +186,8 @@ export default function NewTrade() {
           const volume = details?.volume;
           const typeNum = details?.type;
           const price = details?.price?.toFixed(digit);
+          const positionId = details._id;
+          
           let typeLabel;
           switch (typeNum) {
             case 0:
@@ -222,7 +225,7 @@ export default function NewTrade() {
           }
           const currentColor = (typeNum === 1 || typeNum === 2 || typeNum === 4 || typeNum === 6) ? "blueColor" : "redColor";
           return (
-            '<div style="padding: 7px 10px" class="card"> \
+            '<div style="padding: 7px 10px" class="card" id=' + positionId + '> \
           <div id="cardDesign-top">\
             <div>\
               <div class="bold">\
@@ -338,7 +341,6 @@ export default function NewTrade() {
             const cards = document.getElementsByClassName("card");
             const cardsBottom = document.getElementsByClassName("cardBottom");
             const symbols = document.getElementsByClassName("currentSymbol");
-            // alert(JSON.stringify(positions));
             // applying events
             for (let i = 0; i < cards.length; i++) {
               cards[i].addEventListener("click", () => {
@@ -377,13 +379,14 @@ export default function NewTrade() {
             console.log(err);
           });
   
-          const userData = nativeData?.userData
+        const userData = nativeData?.userData
         const balanceValue = document.getElementById("balanceValue");
         balanceValue.innerText = userData?.balance?.toFixed(2);
         // marginValue.innerText = userData?.margin?.toFixed(2);
       
       </script>
       <!-- handle socket -->
+      <!--
       <script>
         const socket = io('${BASEURL}', {
           transports: ["websocket"],
@@ -471,6 +474,52 @@ export default function NewTrade() {
           calculateRunningProfit_N_Update();
         });
       </script>
+      -->
+      <script>
+        const socket = io('${BASEURL}', {
+          transports: ["websocket"],
+          withCredentials: false,
+        });
+        const userpositionsPayload = {userId}
+        socket.emit("userpositions", JSON.stringify(userpositionsPayload));
+        socket.on("posData", (data)=>{
+          const balanceValue = document.getElementById("balanceValue");
+          balance.innerHTML = (data.balance).toFixed(2);
+          const equityValue = document.getElementById("equityValue");
+          equityValue.innerHTML = (data.equity).toFixed(2);
+          const freeMarginValue = document.getElementById("freeMarginValue");
+          freeMarginValue.innerHTML = data.freeMargin.toFixed(2);
+          const marginValue = document.getElementById("marginValue");
+          marginValue.innerHTML = data.margin.toFixed(2);
+          const marginLevel = document.getElementById("marginLevel");
+          marginLevel.innerHTML = data.level.toFixed(2);
+          const runningProfitField = document.getElementById("runningProfit");
+          let currentColor; 
+          if(data.runningProfit > 0){
+            currentColor = "#498ee6";
+          }else{
+            currentColor = "#ba5a5d";
+          }
+          runningProfitField.style.color = currentColor;
+          runningProfitField.innerHTML = data.runningProfit.toFixed(2);
+        })
+        
+        socket.on("posProfit", (data)=>{
+          const desiredNode = document.getElementById(data.positionId);
+          const currentPriceNode = desiredNode.querySelector(".currentPrice")
+          currentPriceNode.innerHTML = data.currentPrice;
+          const profitPrice = desiredNode.querySelector(".profit");
+          profitPrice.innerHTML = data.profit.toFixed(2);
+          // const profit = data.profit;
+          let currentColor;
+          if(data.profit > 0){
+            currentColor = "#498ee6";
+          }else{
+            currentColor = "#ba5a5d";
+          }
+          profitPrice.style.color = currentColor;
+        })
+      </script>
         <script>
         function openBulkOperation () {
           window.ReactNativeWebView.postMessage("openBulkOperation")
@@ -491,7 +540,7 @@ export default function NewTrade() {
   const [openPositionBulkOperationActionSheet, setOpenPositionBulkOperationActionSheet] = useState(null);
   const [actionSheet4ClosePosition, setActionSheet4ClosePosition] = useState(null);
   const navigation = useNavigation();
-  const TradeWebViewHtml = getHTML(Token);
+  const TradeWebViewHtml = getHTML();
   const [openFilterModal, setOpenFilterModal] = useState(false);
   const onDismiss = () => setOpenFilterModal(false);
   const openMenu = () => setOpenFilterModal(true);
@@ -659,6 +708,7 @@ export default function NewTrade() {
             digit: clickedSymbol?.digit,
             ticket: clickedSymbol?.ticket,
           });
+          console.log(event.nativeEvent.data);
         }}
         // ref={webViewRef}
       />
