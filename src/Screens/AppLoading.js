@@ -18,25 +18,30 @@ import {Checkbox} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AppLoading = () => {
-  const [screenNum, setScreenNum] = useState(0);
+  const [screenNum, setScreenNum] = useState(1);
   const nav = useNavigation();
   const {Token} = useContext(AuthContext);
-  const [isPreviouslyAgreed, setIsPreviouslyAgreed] = useState(true);
+  //const [isPreviouslyAgreed, setIsPreviouslyAgreed] = useState(true);
   useEffect(() => {
-    AsyncStorage.getItem('isAgreed')
+    AsyncStorage.getItem('userToken')
       .then(r => {
-        if (!r) setIsPreviouslyAgreed(true);
+        // console.log(r);
+        // setIsPreviouslyAgreed(true);
+        // consolelog(r, ', token');
+        if (r) {
+          // setScreenNum(1);
+        } else {
+          setScreenNum(0);
+        }
       })
       .catch(err => {
-        console.error(err);
+        console.error('err: ' + err);
       });
   }, []);
   return (
     <>
-      {/* <Splash nav={nav} Token={Token} /> */}
-      {screenNum === 0 && isPreviouslyAgreed && <TermCondition setScreenNum={setScreenNum} />}
+      {screenNum === 0 && <TermCondition setScreenNum={setScreenNum} />}
       {screenNum === 1 && <Splash nav={nav} Token={Token} />}
-      {/* {screenNum === 1 && <Splash nav={nav} Token={Token} />} */}
     </>
   );
 };
@@ -119,7 +124,7 @@ const TermCondition = ({setScreenNum}) => {
         }}>
         Privacy Policy
       </Text>
-      <ScrollView style={{padding: 10}}>
+      <ScrollView style={{padding: 10, paddingBottom: 10}}>
         <Text style={{fontSize: 18}}>Welcome to Rapid TRader!</Text>
         <Text style={{fontSize: 16, textAlign: 'justify'}}>
           Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard
