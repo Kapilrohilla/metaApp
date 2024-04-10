@@ -64,7 +64,6 @@ export default function NewAccountRegistration({route}) {
             return Number(k.replaceAll('user', ''));
           })
           .sort((a, b) => b - a)[0];
-        // console.log(biggestUserKey);
         if (Number.isNaN(biggestUserKey)) {
           biggestUserKey = 0;
         }
@@ -76,7 +75,6 @@ export default function NewAccountRegistration({route}) {
         })
           .then(r => r.json())
           .then(r => {
-            console.log(r);
             dispatch(updateBaseUrl(BASEURL));
             AsyncStorage.setItem('baseUrl', BASEURL);
             setToken(r?.token);
@@ -87,9 +85,7 @@ export default function NewAccountRegistration({route}) {
                 password: r?.user?.password,
               }),
             )
-              .then(r => {
-                console.log('r', r);
-              })
+              .then(r => {})
               .catch(er => console.error(er?.message));
             navigation.dispatch(
               CommonActions.reset({

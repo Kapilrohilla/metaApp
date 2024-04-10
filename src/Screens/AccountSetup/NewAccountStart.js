@@ -23,43 +23,30 @@ export default function NewAccountStart({navigate, route}) {
           }}>
           Registration
         </Text>
-        <View
-          style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+        <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
           <Text style={{fontSize: 17, color: '#fff'}}>Name</Text>
-          <Text style={{fontSize: 17, color: '#fff'}}>Kapil</Text>
+          <Text style={{fontSize: 17, color: '#fff'}}>{userDetails.name}</Text>
         </View>
-        <View
-          style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+        <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
           <Text style={{fontSize: 17, color: '#fff'}}>Email</Text>
-          <Text style={{fontSize: 17, color: '#fff'}}>
-            {userDetails?.email}
-          </Text>
+          <Text style={{fontSize: 17, color: '#fff'}}>{userDetails?.email}</Text>
         </View>
         {/* <View
           style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
           <Text style={{fontSize: 17}}>Password</Text>
           <Text style={{fontSize: 17}}>kapilrohilla</Text>
         </View> */}
-        <View
-          style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+        <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
           <Text style={{fontSize: 17, color: '#fff'}}>Server</Text>
-          <Text style={{fontSize: 17, color: '#fff'}}>
-            {route?.params?.server}
-          </Text>
+          <Text style={{fontSize: 17, color: '#fff'}}>{route?.params?.server}</Text>
         </View>
-        <View
-          style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+        <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
           <Text style={{fontSize: 17, color: '#fff'}}>Account Type</Text>
-          <Text style={{fontSize: 17, color: '#fff'}}>
-            {userDetails?.afterLogin?.group?.Name}
-          </Text>
+          <Text style={{fontSize: 17, color: '#fff'}}>{userDetails?.afterLogin?.group?.Name}</Text>
         </View>
-        <View
-          style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+        <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
           <Text style={{fontSize: 17, color: '#fff'}}>Deposit</Text>
-          <Text style={{fontSize: 17, color: '#fff'}}>
-            {userDetails?.balance} USD
-          </Text>
+          <Text style={{fontSize: 17, color: '#fff'}}>{userDetails?.balance} USD</Text>
         </View>
         <Text
           style={{
@@ -75,26 +62,17 @@ export default function NewAccountStart({navigate, route}) {
           New account has been opeend successfully{' '}
         </Text>
       </View>
-      <View
-        style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+      <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
         <Text style={{fontSize: 17, color: '#fff'}}>Login</Text>
-        <Text style={{fontSize: 17, color: '#fff'}}>
-          {userDetails?.afterLogin?.userId}
-        </Text>
+        <Text style={{fontSize: 17, color: '#fff'}}>{userDetails?.afterLogin?.userId}</Text>
       </View>
-      <View
-        style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+      <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
         <Text style={{fontSize: 17, color: '#fff'}}>Password</Text>
-        <Text style={{fontSize: 17, color: '#fff'}}>
-          {userDetails?.afterLogin?.password}
-        </Text>
+        <Text style={{fontSize: 17, color: '#fff'}}>{userDetails?.afterLogin?.password}</Text>
       </View>
-      <View
-        style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
+      <View style={[styles.between, {marginHorizontal: 15, paddingVertical: 10}]}>
         <Text style={{fontSize: 17, color: '#fff'}}>Investor</Text>
-        <Text style={{fontSize: 17, color: '#fff'}}>
-          {userDetails?.afterLogin?.investorPassword}
-        </Text>
+        <Text style={{fontSize: 17, color: '#fff'}}>{userDetails?.afterLogin?.investorPassword}</Text>
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -113,9 +91,7 @@ export default function NewAccountStart({navigate, route}) {
           borderBottomColor: '#E9E9E977',
           borderBottomWidth: 1.5,
         }}>
-        <Text style={{textAlign: 'center', fontSize: 18, color: '#3378c2'}}>
-          Copy to clipboard
-        </Text>
+        <Text style={{textAlign: 'center', fontSize: 18, color: '#3378c2'}}>Copy to clipboard</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
