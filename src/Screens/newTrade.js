@@ -519,6 +519,33 @@ export default function NewTrade() {
           }
           profitPrice.style.color = currentColor;
         })
+        socket.on("getOrder", (data)=>{
+          const containerContentLength = positionsContainer.innerHTML.toString().length;
+          positionsContainer.innerHTML += getCardHtml(data.getOrder.position);
+          usedMargin.style.display = "flex";
+          marginLevel.style.display = "flex";
+          if(containerContentLength < 10){
+            const positionActionHTML = \`
+              <p id="positionDropDown" class="bold">
+              <span>Positions</span> <span>P/L <span id="runningProfit" style="font-size: 25, font-weight: 800">0.0 </span></span>
+              </p>
+              \`
+              const positionActions = document.getElementById("positionActions");
+              positionActions.innerHTML = positionActionHTML;
+          }
+        });
+        socket.on("closePosition", data=>{
+          const ele = document.getElementById(data.positionId);
+          ele.parentNode.removeChild(ele);
+          const containerContentLength = positionsContainer.innerHTML.toString().length;
+          window.ReactNativeWebView.postMessage(JSON.stringify(containerContentLength));
+          if(containerContentLength < 50){
+              usedMargin.style.display = "none";
+              marginLevel.style.display = "none";
+              const positionDropDown = document.getElementById("positionDropDown");
+              positionDropDown.parentNode.removeChild(positionDropDown);
+          }
+        })
       </script>
         <script>
         function openBulkOperation () {
